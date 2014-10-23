@@ -61,7 +61,9 @@ public class UdpSender implements Runnable {
             Logger.getLogger(UdpSender.class.getName()).log(Level.SEVERE, null, ex);
         }
         send(MDAPClient.msg.get("EXEC-CLI").genCommand());
-        //send(MDAPClient.msg.get("INFO-EXPANDED").genCommand());
+        send(MDAPClient.msg.get("EXEC-CLI2").genCommand());
+       // send(MDAPClient.msg.get("INFO-EXPANDED").genCommand());
+       // send(MDAPClient.msg.get("INFO-EXPANDED2").genCommand());
         Scanner inputScanner = new Scanner(System.in);
         while (true) {
             System.out.println("[System]: Press any key to exit");
