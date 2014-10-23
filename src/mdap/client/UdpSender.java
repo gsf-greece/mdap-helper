@@ -31,6 +31,7 @@ public class UdpSender implements Runnable {
         s.leaveGroup(group);
         s.close();
     }
+
     public void send(String input) {
         data = new DatagramPacket(input.getBytes(), input.length(),
                 group, 3235);
@@ -53,14 +54,19 @@ public class UdpSender implements Runnable {
             System.exit(-1);
         }
         System.out.println("[System]: ready to send data.");
-        send(MDAPClient.msg.get("INFO-EXPANDED").genCommand());
+        send(MDAPClient.msg.get("SEARCH").genCommand());
+        try {
+            Thread.sleep(2000); // TODO: This needs to be replaced.
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UdpSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        send(MDAPClient.msg.get("EXEC-CLI").genCommand());
+        //send(MDAPClient.msg.get("INFO-EXPANDED").genCommand());
         Scanner inputScanner = new Scanner(System.in);
-        String keyInput = null;
         while (true) {
-            System.out.println("[System]: type Exit to exit.");
-            keyInput = inputScanner.nextLine();
-            if ("exit".equals(keyInput)) { break; }
-        //  else send(Arrays.asList(keyInput));
+            System.out.println("[System]: Press any key to exit");
+            String keyInput = inputScanner.next();
+            break;
         }
         try {
             stop();

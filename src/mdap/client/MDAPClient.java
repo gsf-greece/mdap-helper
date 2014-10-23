@@ -5,7 +5,7 @@ import java.util.*;
 
 public class MDAPClient {
     public static Map<String,CodeMap> msg = new LinkedHashMap<>();
-    public static Map<String,String> settings = new LinkedHashMap<>();
+    public static volatile Map<String,String> settings = new LinkedHashMap<>();
     
     public static void main(String[] args) throws IOException { 
         
@@ -21,9 +21,11 @@ public class MDAPClient {
         keyInput = inputScanner.nextLine();
         settings.put("USER-PWD", keyInput);
     
-        msg.put("SEARCH",new CodeMap("ANT-SEARCH MDAP/1.1","46"));
-        // msg.put("INFO-EXPANDED","INFO MDAP/1.2\r\nSEQ-NR:1\r\nTO-ANT:1208RA82F\r\nUSER-ID:\r\nUSER-PWD:\r\n0C");
-        msg.put("INFO-EXPANDED", new CodeMap("INFO MDAP/1.2",1,true,"0C"));
+        msg.put("SEARCH",new CodeMap("ANT-SEARCH MDAP/1.1"));
+        msg.put("EXEC-CLI", new CodeMap("EXEC-CLI MDAP/1.2","CLI-CMD:service system modify name FTP state disabled",1,true));
+        msg.put("EXEC-CLI2", new CodeMap("EXEC-CLI MDAP/1.2","CLI-CMD:xdsl debug bitloadinginfo",1,true));
+        //msg.put("INFO-EXPANDED","INFO MDAP/1.2\r\nSEQ-NR:1\r\nTO-ANT:1208RA82F\r\nUSER-ID:\r\nUSER-PWD:\r\n0C");
+        msg.put("INFO-EXPANDED", new CodeMap("INFO MDAP/1.2",1,true));
        //msg.put("BITLOADINGINFO","EXEC-CLI MDAP/1.2\r\nCLI-CMD:xdsl debug bitloadinginfo\r\nSEQ-NR:1\r\nTO-ANT:1208RA82F\r\nUSER-ID:gsf\r\nUSER-PWD:\r\n1F");
       // msg.put("EXEC-CLI MDAP/1.2\r\nSEQ-NR:2\r\nTO-ANT:1208RA82F\r\nUSER-ID:gsf\r\nUSER-PWD:\r\n5F");
       // msg.put("INFO MDAP/1.2\r\nSEQ-NR:1\r\nTO-ANT:1208RA82F\r\nUSER-ID:gsf\r\nUSER-PWD:\r\n0F");
